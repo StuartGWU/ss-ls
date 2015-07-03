@@ -1,9 +1,6 @@
-# ss-ls
-ss-ls
+# SS-LS
 
-******************************************************
-* Prerequisites (instructions below):
-******************************************************
-1) NodeJS
-2) MongoDB
-3) Redis
+# Prerequisites (instructions below):
+* NodeJS
+* MongoDB
+* Redis
