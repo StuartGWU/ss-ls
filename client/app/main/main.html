@@ -1,0 +1,49 @@
+<div ng-include="'components/navbar/navbar.html'"></div>
+
+<header class="hero-unit" id="banner">
+  <div class="container">
+    <h1>SS LS</h1>
+    <p class="lead"></p>    
+  </div>
+</header>
+
+<div class="container">
+  
+  <div class="row">
+      <div class="col-md-4"></div>
+      <div class="col-md-4 center-block">      
+        <button class="btn btn-lg btn-success center-block btn-tips" ui-sref="tips">
+            View Tips
+        </button>        
+      </div>
+  </div>
+  
+  <div class="row">
+    <div class="collist-group">
+      <a href="#" class="list-group-item">
+        <h4 class="list-group-item-heading">Load balanced with sticky sessions</h4>
+        <p class="list-group-item-text">The load balancer assigns clients to a specific server during the session. The server assignment is done via round-robin. See the HTTP response headers for the assigned server.</p>
+      </a>
+      <a href="#" class="list-group-item">
+        <h4 class="list-group-item-heading">Scale Horizontally!</h4>
+        <p class="list-group-item-text">Designed so that it can easily scale horizontally. Utilizes Redis as Pub/Sub event driven bus to maintain state changes across the server fleet. When a new server is spun up (for any reason: server load/demand, fail-over, etc.), it starts as if it was the first and only server instance - it subscribes to the bus for state changes. 
+        <p></p>              
+        For example: when a client edits/creates data (eg, a Tip) that work is being performed on a single server, specifically the server for which the client was assigned to by the load balancer. In order to update all other clients in realtime we need to publish an event (via web sockets) to each of the connected clients. BUT, the clients are all connected to different servers in the server fleet. Therefore, the server fleet utilizing its own event bus for which each server subscribes and publishes to. Now, the server can subscribe to events regarding data changes being performed by users on other servers, but also push those data changes to each of its connected clients.     
+        </p>
+      </a>
+      <a href="#" class="list-group-item">
+        <h4 class="list-group-item-heading">Realtime Data</h4>
+        <p class="list-group-item-text">Clients subscribe to the server so that the server can notify of them of data changes. No polling.</p>
+      </a>
+      <a href="#" class="list-group-item">
+        <h4 class="list-group-item-heading">Event Driven</h4>
+        <p class="list-group-item-text">Utilizing an event bus to maintain state consistency amoung all servers in the fleet reduces the burden on the databases, thus eliminating bottlenecks - read/write locks, etc.</p>
+      </a>
+    </div>
+  </div>
+</div>
+
+<footer class="footer">
+  <div class="container">      
+  </div>
+</footer>

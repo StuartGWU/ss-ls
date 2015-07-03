@@ -1,0 +1,99 @@
+<div ng-include="'components/navbar/navbar.html'"></div>
+
+<div class="container">
+  <div class="row">
+    <alert type="{{alert.type}}" close="alert.show=false" ng-show="alert.show">
+      <span class="glyphicon glyphicon-ok" aria-hidden="true"></span>
+      {{alert.msg}}
+    </alert>
+    <alert name="alertCrud" type="warning" ng-show="!isLoggedIn">
+      <span class="glyphicon glyphicon-flag" aria-hidden="true"></span>
+      You must be logged in to edit or create tips. However, you can submit a tip anonymously.
+    </alert>
+
+    <div class="col-lg-12">
+      <h1 class="page-header">Tips: <small>synced across all clients and server instances in realtime</small></h1>
+      <ul class="nav nav-tabs nav-stacked col-md-4 col-lg-4 col-sm-6" ng-repeat="tip in tips">
+        <li>
+          <a href="#" tooltip="{{tip.message}}" tooltip="Select tip" ng-click="selectTip(tip)">{{tip.message}}<button type="button" class="close" ng-click="deleteTip(tip)" tooltip="Delete tip" ng-show="isLoggedIn">&times;</button>
+          </a>
+          <div>
+          </div>
+        </li>
+      </ul>
+    </div>
+  </div>
+
+  <form name="tipEditForm" class="tips-form well well-sm" ng-hide="!selectedTip" novalidate>    
+    <h2 class="form-heading">Edit Tip</h2>
+    <div class="form-group">
+      <label>Message:</label>
+      <input type="text" name="message" class="form-control" ng-model="selectedTip.message" required ng-minlength="3">
+      <p class="help-block" ng-show="tipEditForm.message.$error.minlength && newpostForm.message.$dirty"         
+         Message text must be greater than 3 characters.
+      </p>
+      <p class="help-block" ng-show="tipEditForm.message.$error.required && newpostForm.message.$dirty">
+         Please enter message text - it cannot be blank.
+      </p>
+    </div>
+
+    <div class="form-group">
+      <label>Created On:</label>
+
+      <span>{{selectedTip.createdOn}}</span>
+    </div>
+
+    <div class="form-group">
+      <label>Submitted By:</label>
+
+      <span>{{selectedTip.submittedBy}}</span>
+    </div>
+
+    <div class="form-group" ng-show="selectedTip.createdOn != selectedTip.updatedOn">
+      <label>Updated On:</label>
+
+      <span>{{selectedTip.updatedOn}}</span>
+    </div>
+
+    <div class="form-group" ng-show="selectedTip.createdOn != selectedTip.updatedOn">
+      <label>Updated By:</label>
+
+      <span>{{selectedTip.updatedBy}}</span>
+    </div>
+
+    <div class="form-group" ng-show="selectedTip.createdOn != selectedTip.updatedOn">
+      <label>Original Message:</label>
+
+      <span>{{selectedTip.originalMessage}}</span>
+    </div>
+
+    <div ng-show="isLoggedIn">
+      <button type="submit" class="btn btn-primary btn-lg" ng-click="updateTip()" ng-disabled="tipEditForm.$invalid" disabled="disabled">Update</button>        
+      <button class="btn btn-default btn-lg" ng-click="selectedTip = null;">Cancel</button>
+    </div>
+  </form>
+
+  <form name="tipNewForm" class="tips-form well well-sm" novalidate ng-hide="selectedTip">
+    <h2 class="form-heading">Create Tip</h2>
+
+    <label>Syncs in realtime across clients</label>
+   
+    <input type="text" name="message" class="form-control" placeholder="Enter message tip message here" ng-model="newTip.message" required ng-minlength="3">  
+    <p class="help-block" ng-show="tipNewForm.message.$error.minlength && tipNewForm.message.$dirty"> Message text must be greater than 3 characters.
+    </p>
+    <p class="help-block" ng-show="tipNewForm.message.$error.required && tipNewForm.message.$dirty">
+       Please enter message text - it cannot be blank.
+    </p>
+
+    <div class="checkbox">
+      <label>
+        <input type="checkbox" ng-model="newTip.anonymous"> Anonymous?
+      </label>
+    </div>
+
+    <div ng-show="isLoggedIn">
+      <button type="submit" class="btn btn-primary btn-lg" ng-click="addTip()" ng-disabled="tipNewForm.$invalid" disabled="disabled">Post Tip</button>
+    </div>      
+    
+  </form>
+</div>
